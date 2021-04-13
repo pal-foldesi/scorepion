@@ -8,6 +8,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.utility.DockerImageName;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +21,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class LeaderboardServiceTest {
+    private static final DockerImageName REDIS_IMAGE = DockerImageName.parse("redis:latest");
+    private static final GenericContainer<?> REDIS_CONTAINER = new GenericContainer<>(REDIS_IMAGE)
+            .withExposedPorts(6379);
+
+    @DynamicPropertySource
+    static void redisProperties(DynamicPropertyRegistry registry) {
+        REDIS_CONTAINER.start();
+        registry.add("spring.redis.host", REDIS_CONTAINER::getContainerIpAddress);
+        registry.add("spring.redis.port", REDIS_CONTAINER::getFirstMappedPort);
+    }
 
     @Autowired
     private LeaderboardService leaderboardService;
