@@ -6,7 +6,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = {"http://localhost:8081", "https://pal-foldesi.github.io"})
 public class LeaderboardApi {
     private final LeaderboardService leaderboardService;
 
