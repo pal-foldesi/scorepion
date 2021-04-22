@@ -33,6 +33,9 @@ jobs:
       - name: Push Docker image to Heroku Container Registry
         run:
           docker push registry.heroku.com/scorepion/web
+      - name: Update environment variables
+        run:
+          HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku config:set ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }} ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} DB_PASSWORD=${{ secrets.DB_PASSWORD }} JWT_SECRET=${{ secrets.JWT_SECRET }} -a scorepion
       - name: Redeploy app
         run:
           HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku container:release web -a scorepion

@@ -1,5 +1,7 @@
 package name.pali.scorepion.leaderboard;
 
+import name.pali.scorepion.auth.jpa.AuthorityRepository;
+import name.pali.scorepion.auth.jpa.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,12 +9,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -33,10 +40,29 @@ class LeaderboardServiceTest {
     }
 
     @Autowired
-    private LeaderboardService leaderboardService;
+    LeaderboardRepository leaderboardRepository;
 
     @Autowired
-    LeaderboardRepository leaderboardRepository;
+    private LeaderboardService leaderboardService;
+
+    // JPA-related unneeded beans
+    @MockBean
+    private DataSource dataSource;
+
+    @MockBean
+    private EntityManagerFactory entityManagerFactory;
+
+    @MockBean
+    private CommandLineRunner firstAdminCreatingRunner;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
+
+    @MockBean
+    private AuthorityRepository authorityRepository;
+
+    @MockBean
+    private UserRepository userRepository;
 
     @BeforeEach
     void clearDatastoreBefore() {
