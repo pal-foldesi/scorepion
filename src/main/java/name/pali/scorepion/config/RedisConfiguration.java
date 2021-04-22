@@ -7,7 +7,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.redis.core.script.RedisScript;
 
 @Configuration
-public class Scripting {
+public class RedisConfiguration {
 
     @Bean
     public RedisScript<Void> script(ResourceLoader resourceLoader) {
