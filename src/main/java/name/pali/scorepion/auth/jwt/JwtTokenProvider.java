@@ -37,7 +37,7 @@ public class JwtTokenProvider implements InitializingBean {
     public String generateAccessToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
         long now = (new Date()).getTime();
-        long tokenValidityInMilliseconds = 60 * 1000;
+        long tokenValidityInMilliseconds = 10 * 60 * 1000;
         Date validity = new Date(now + tokenValidityInMilliseconds);
         return Jwts
                 .builder()
