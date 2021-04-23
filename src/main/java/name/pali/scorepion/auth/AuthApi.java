@@ -1,5 +1,6 @@
 package name.pali.scorepion.auth;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import name.pali.scorepion.auth.jwt.JwtTokenProvider;
 import name.pali.scorepion.config.CorsAllowedOrigins;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "Authentication")
 @RestController
 @RequestMapping
 public class AuthApi {

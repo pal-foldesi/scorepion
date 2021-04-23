@@ -1,5 +1,8 @@
 package name.pali.scorepion.leaderboard;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import name.pali.scorepion.config.CorsAllowedOrigins;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Tag(name = "Leaderboard")
 @RestController
 public class LeaderboardApi {
     private final LeaderboardService leaderboardService;
@@ -15,6 +19,7 @@ public class LeaderboardApi {
         this.leaderboardService = leaderboardService;
     }
 
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @CrossOrigin(origins = CorsAllowedOrigins.LOCAL, methods = RequestMethod.POST)
     @PostMapping("/boards")
@@ -34,6 +39,7 @@ public class LeaderboardApi {
         return leaderboardService.getScores(boardKey);
     }
 
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @CrossOrigin(origins = CorsAllowedOrigins.LOCAL, methods = RequestMethod.PUT)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/boards/{boardKey}")
@@ -42,6 +48,7 @@ public class LeaderboardApi {
         leaderboardService.updateBoard(boardKey, leaderboardChangeRequest);
     }
 
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @CrossOrigin(origins = CorsAllowedOrigins.LOCAL, methods = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/boards/{boardKey}/scores/clear")
@@ -61,6 +68,7 @@ public class LeaderboardApi {
         leaderboardService.createScore(boardKey, score);
     }
 
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @CrossOrigin(origins = CorsAllowedOrigins.LOCAL, methods = RequestMethod.DELETE)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/boards/{boardKey}")
