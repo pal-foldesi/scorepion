@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ScorepionApplication.class)
 @AutoConfigureMockMvc
 @PropertySource("classpath:application.properties")
-class AuthApiTest {
+class AuthControllerTest {
     private static final String POSTGRES_PASSWORD = "dbTestPass";
     private static final DockerImageName SQL_IMAGE = DockerImageName.parse("postgres:13.2");
     private static final GenericContainer<?> SQL_CONTAINER = new GenericContainer<>(SQL_IMAGE)

@@ -17,13 +17,13 @@ import javax.validation.Valid;
 @Tag(name = "Authentication")
 @RestController
 @RequestMapping
-public class AuthApi {
+public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthApi(AuthenticationManager authenticationManager,
-                   JwtTokenProvider jwtTokenProvider) {
+    public AuthController(AuthenticationManager authenticationManager,
+                          JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }

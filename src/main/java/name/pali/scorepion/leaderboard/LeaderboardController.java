@@ -12,10 +12,10 @@ import java.util.List;
 
 @Tag(name = "Leaderboard")
 @RestController
-public class LeaderboardApi {
+public class LeaderboardController {
     private final LeaderboardService leaderboardService;
 
-    public LeaderboardApi(LeaderboardService leaderboardService) {
+    public LeaderboardController(LeaderboardService leaderboardService) {
         this.leaderboardService = leaderboardService;
     }
 

@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = ScorepionApplication.class)
 @AutoConfigureMockMvc
-class LeaderboardApiTest {
+class LeaderboardControllerTest {
     @MockBean
     private LeaderboardService leaderboardService;
 
