@@ -1,0 +1,47 @@
+services:
+  web:
+    build: .
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - target: 8080
+        published: 8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  redis:
+    image: redis:6.2.1
+    ports:
+      - target: 6379
+        published: 6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - type: volume
+        source: redisdata
+        target: /scorepion/redisdata
+  postgres:
+    image: postgres:13.2
+    environment:
+      PGUSER: postgres
+      POSTGRES_PASSWORD: DzCBTW9bmx26s0L8D0oOepW4iix8RE
+    ports:
+      - target: 5432
+        published: 5432
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - type: volume
+        source: postgresdata
+        target: /scorepion/postgresdata
+volumes:
+  redisdata:
+  postgresdata:
