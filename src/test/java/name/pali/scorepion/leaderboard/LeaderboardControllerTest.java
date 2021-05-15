@@ -150,14 +150,14 @@ class LeaderboardControllerTest {
     @WithMockUser(roles = "ADMIN")
     @Test
     void givenMockUserThatIsAdmin_whenCheckingScoreLeaderboardEligibility_then200OkIsReturned() throws Exception {
-        mvc.perform(get("/boards/{boardKey}/eligible", "whatever").param("score", String.valueOf(5))
+        mvc.perform(get("/boards/{boardKey}/eligibility", "whatever").param("score", String.valueOf(5))
         ).andExpect(status().isOk());
     }
 
     @DisplayName("Can check whether score is eligible for leaderboard membership as a guest")
     @Test
     void givenGuest_whenCheckingScoreLeaderboardEligibility_then200OkIsReturned() throws Exception {
-        mvc.perform(get("/boards/{boardKey}/eligible", "whatever").param("score", String.valueOf(5))
+        mvc.perform(get("/boards/{boardKey}/eligibility", "whatever").param("score", String.valueOf(5))
         ).andExpect(status().isOk());
     }
 

@@ -57,8 +57,8 @@ public class LeaderboardController {
     }
 
     @CrossOrigin(origins = {CorsAllowedOrigins.LOCAL, CorsAllowedOrigins.REMOTE}, methods = RequestMethod.GET)
-    @GetMapping("/boards/{boardKey}/eligible")
-    public boolean isEligible(@PathVariable String boardKey, @RequestParam int score) {
+    @GetMapping("/boards/{boardKey}/eligibility")
+    public boolean checkEligibility(@PathVariable String boardKey, @RequestParam int score) {
         return leaderboardService.scoreEligibleForBoardMembership(boardKey, score);
     }
 

@@ -55,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/boards/{boardKey}").permitAll()
                 .antMatchers(HttpMethod.GET, "/boards/{boardKey}/scores").permitAll()
                 .antMatchers(HttpMethod.POST, "/boards/{boardKey}/scores").permitAll()
-                .antMatchers(HttpMethod.GET, "/boards/{boardKey}/eligible").permitAll()
+                .antMatchers(HttpMethod.GET, "/boards/{boardKey}/eligibility").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated()
                 .and()
