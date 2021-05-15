@@ -13,22 +13,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
-    private final DataSource dataSource;
 
-    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider, DataSource dataSource,
-                                 CorsConfigurationSource corsConfigurationSource) {
+    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.dataSource = dataSource;
     }
 
     @Bean
