@@ -90,16 +90,19 @@ public class LeaderboardService {
     }
 
     public boolean scoreEligibleForBoardMembership(String boardKey, int score) {
-        Set<ZSetOperations.TypedTuple<String>> actualScores =
-                stringRedisTemplate.boundZSetOps(SCORES_SET_PREFIX + boardKey).reverseRangeWithScores(0, -1);
-        if (actualScores == null) {
+        Optional<Leaderboard> boardOpt = leaderboardRepository.findById(boardKey);
+        if (boardOpt.isEmpty()) {
+            throw new IllegalArgumentException(BOARD_NOT_FOUND);
+        }
+        List<Score> persistedScores = getScores(boardKey);
+        Leaderboard board = boardOpt.get();
+        int topN = board.getTopN();
+        if (persistedScores.size() < topN) {
             return true;
         }
-        long lessThanScoreCount = actualScores.stream()
-                .map(ZSetOperations.TypedTuple::getScore)
-                .filter(Objects::nonNull)
-                .mapToDouble(Double::doubleValue)
-                .filter(doubleValue -> (int) doubleValue < score)
+        long lessThanScoreCount = persistedScores.stream()
+                .mapToInt(Score::getValue)
+                .filter(value -> value < score)
                 .count();
         return lessThanScoreCount > 0;
     }

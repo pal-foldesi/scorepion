@@ -216,6 +216,39 @@ class LeaderboardServiceTest {
     }
 
     @Test
+    void canCheckIfScoreIsEligibleForSubmissionIfBoardHasNoScores() {
+        int topN = 3;
+
+        String boardKey = leaderboardService.createBoard(topN);
+
+        int obtainedScore = 1;
+
+        boolean actualResult = leaderboardService.scoreEligibleForBoardMembership(boardKey, obtainedScore);
+        assertThat(actualResult).isTrue();
+    }
+
+    @Test
+    void canCheckIfScoreIsEligibleForSubmissionIfBoardHasLessScoresThanIsAllowed() {
+        int topN = 3;
+
+        String boardKey = leaderboardService.createBoard(topN);
+
+        Score[] scoresToCreate = {
+                new Score("Alphonso", 3),
+                new Score("Derek", 2)
+        };
+
+        for (Score score : scoresToCreate) {
+            leaderboardService.createScore(boardKey, score);
+        }
+
+        int obtainedScore = 1;
+
+        boolean actualResult = leaderboardService.scoreEligibleForBoardMembership(boardKey, obtainedScore);
+        assertThat(actualResult).isTrue();
+    }
+
+    @Test
     void canRetrieveScores() {
         int topN = 10;
 
